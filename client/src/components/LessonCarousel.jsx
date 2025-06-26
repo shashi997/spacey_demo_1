@@ -15,7 +15,7 @@ const lessons = [
     { id: 5, title: 'Zero Gravity', image: ZeroGravityImg }, // Re-using image
 ];
 
-const LessonCarousel = ({ isMobile, isLessonsExpanded, onToggleLessons }) => {
+const LessonCarousel = () => {
     return (
         <div className="rounded-lg">
           <div className="flex overflow-x-auto space-x-6 pb-4">
