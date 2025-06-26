@@ -63,55 +63,59 @@ const WebcamFeed = () => {
   };
 
   if (isMediaLoading) {
-    return <p className="text-gray-500">Initializing webcam and microphone...</p>;
+    return <p className="text-text-secondary">Initializing webcam and microphone...</p>;
   }
 
   if (mediaError) {
-    return <p className="text-red-500 p-4 text-center">{mediaError}</p>;
+    return <p className="text-red-400 p-4 text-center">{mediaError}</p>;
   }
 
   return (
-    <div className="w-full h-full relative overflow-hidden rounded-xl border border-gray-200 shadow-sm bg-black flex flex-col">
+    <div className="w-full h-full relative overflow-hidden rounded-lg border border-border-color bg-space-dark flex items-center justify-center">
       <div className="relative w-full flex-grow">
         <video
           ref={videoRef}
           autoPlay
           playsInline
           muted // Mute to prevent feedback loop from speakers to mic
-          className="w-full h-full object-cover"
+          className={`w-full h-full object-cover transition-opacity duration-500 ${isMediaLoading || mediaError ? 'opacity-0' : 'opacity-100'}`}
         />
-        <div className="absolute top-3 left-3 bg-black bg-opacity-50 text-white px-2 py-1 rounded-md text-xs font-semibold tracking-wider">
-          LIVE FEED
-        </div>
       </div>
-      <div className="p-4 bg-gray-800 text-white">
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium">
-            Status: {isListening ? "Listening..." : "Ready"}
-          </p>
-          <button
-            onClick={handleListenButtonClick}
-            disabled={!isRecognitionSupported}
-            className={`px-4 py-2 rounded-lg font-bold text-sm transition-colors ${
-              isListening 
-                ? 'bg-red-500 hover:bg-red-600' 
-                : 'bg-green-500 hover:bg-green-600'
-            } ${!isRecognitionSupported ? 'bg-gray-400 cursor-not-allowed' : ''}`}
-          >
-            {isListening 
-              ? 'Stop Listening' 
-              : (isRecognitionSupported ? 'Start Listening' : 'Not Supported')}
-          </button>
-        </div>
-        <div className="mt-3 p-2 bg-gray-900 rounded-md h-16 overflow-y-auto">
-          {/* Display speech error from the hook if it exists */}
-          {speechError ? (
-            <p className="text-red-400 italic">{speechError}</p>
-          ) : (
-            <p className="text-gray-300 italic">{transcript || "Your speech will appear here..."}</p>
-          )}
-        </div>
-      </div>
+      {!isMediaLoading && !mediaError && (
+        <>
+          <div className="absolute top-3 left-3 bg-black bg-opacity-50 text-white px-2 py-1 rounded-md text-xs font-semibold tracking-wider">
+            LIVE FEED
+          </div>
+          <div className="p-4 bg-gray-800 text-white">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium">
+                Status: {isListening ? "Listening..." : "Ready"}
+              </p>
+              <button
+                onClick={handleListenButtonClick}
+                disabled={!isRecognitionSupported}
+                className={`px-4 py-2 rounded-lg font-bold text-sm transition-colors ${
+                  isListening 
+                    ? 'bg-red-500 hover:bg-red-600' 
+                    : 'bg-green-500 hover:bg-green-600'
+                } ${!isRecognitionSupported ? 'bg-gray-400 cursor-not-allowed' : ''}`}
+              >
+                {isListening 
+                  ? 'Stop Listening' 
+                  : (isRecognitionSupported ? 'Start Listening' : 'Not Supported')}
+              </button>
+            </div>
+            <div className="mt-3 p-2 bg-gray-900 rounded-md h-16 overflow-y-auto">
+              {/* Display speech error from the hook if it exists */}
+              {speechError ? (
+                <p className="text-red-400 italic">{speechError}</p>
+              ) : (
+                <p className="text-gray-300 italic">{transcript || "Your speech will appear here..."}</p>
+              )}
+            </div>
+          </div>
+      </>
+    )}
     </div>
   );
 };

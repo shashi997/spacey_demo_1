@@ -20,14 +20,14 @@ function Box(props) {
         onClick={(event) => click(!clicked)}
         onPointerOver={(event) => (event.stopPropagation(), hover(true))}
         onPointerOut={(event) => hover(false)}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
+        <boxGeometry args={[1.2, 1.2, 1.2]} />
+        <meshStandardMaterial color={hovered ? '#8B5CF6' : '#22D3EE'} />
       </mesh>
     )
 }
 
 
-export default function App() {
+export default function AvatarCanvas() {
 return (
     <Canvas>
       <ambientLight intensity={Math.PI / 2} />
