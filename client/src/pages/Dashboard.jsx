@@ -4,44 +4,34 @@ import WebcamFeed from '../components/WebcamFeed'
 import LessonCarousel from '../components/LessonCarousel'
 import AI_Chat from '../components/AI_Chat';
 
-// A simple hook to get window size
-const useWindowSize = () => {
-  const [size, setSize] = useState([0, 0]);
-  useEffect(() => {
-    function updateSize() {
-      setSize([window.innerWidth, window.innerHeight]);
-    }
-    window.addEventListener('resize', updateSize);
-    updateSize();
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-  return { width: size[0], height: size[1] };
-};
-
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col h-screen">
-      {/* Top Section: Main Panels */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Left Panel (65%): 3D Avatar */}
-        <div className="w-[65%] h-full p-4">
-          <div className="bg-gray-100 rounded-lg h-full shadow-inner">
-            <AvatarCanvas />
-          </div>
+    <div className="grid grid-cols-2 h-screen gap-4 p-4 bg-space-dark">
+      {/* Left Side */}
+      <div className="flex flex-col h-full gap-4">
+        {/* Top-Left: 3D Avatar */}
+        <div className="h-[60%] bg-space-blue rounded-lg shadow-md overflow-hidden">
+          <AvatarCanvas />
         </div>
 
-        {/* Right Panel (35%): Webcam Feed */}
-        <div className="w-[35%] h-full p-4">
-          <div className="bg-gray-100 rounded-lg h-full shadow-inner flex items-center justify-center">
-            <WebcamFeed />
-          </div>
+        {/* Bottom-Left: Lesson Cards */}
+        <div className="h-[40%] bg-space-blue rounded-lg shadow-md overflow-hidden">
+          <LessonCarousel />
         </div>
       </div>
 
-      {/* Bottom Section: Lesson Carousel */}
-      <div className="w-full p-4">
-        <LessonCarousel />
+      {/* Right Side */}
+      <div className="flex flex-col h-full gap-4">
+        {/* Top-Right: Webcam Feed */}
+        <div className="h-[30%] bg-space-blue rounded-lg shadow-md flex items-center justify-center overflow-hidden">
+          <WebcamFeed />
+        </div>
+
+        {/* Bottom-Right: AI Chat */}
+        <div className="h-[70%] bg-space-blue rounded-lg shadow-md overflow-hidden">
+          <AI_Chat />
+        </div>
       </div>
     </div>
   )
